@@ -58,20 +58,28 @@ class User extends Authenticatable
         return $this->hasMany(Post::class, 'user', 'id');
     }
 
+    
+
     public function friends()
     {
-        return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'friends', 'user_from', 'user_to')
+                ->wherePivot('status', 'accepted')
+                ->withTimestamps();
     }
 
     public function friendRequests()
     {
-        return $this->belongsToMany(User::class, 'friend_requests', 'user_id', 'friend_id')->withTimestamps();
+        return $this->hasMany(Friends::class, 'user_to')
+                ->where('status', 'pending');
     }
 
-    public function messages()
+    public function sentFriendRequests()
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Friends::class, 'user_from')
+                ->where('status', 'pending');
     }
+
+    
 
     public function clubs()
     {
@@ -86,6 +94,16 @@ class User extends Authenticatable
      public function likes()
     {
         return $this->belongsToMany(Like::class);
+    }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
     }
 
     public function profile(){

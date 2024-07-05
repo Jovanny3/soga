@@ -53,6 +53,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'socialNetwork') }}</title>
     
     <!-- Fonts -->
@@ -82,6 +83,7 @@
                 <li><a href="{{ route('home') }}"><i class="ri-home-4-line"></i></a></li>
                 <li><a href="{{ route('new-group') }}"><i class="ri-add-circle-line"></i></a></li>
                 <li><a href="{{ route('community') }}"><i class="ri-group-line"></i></a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('messages.index') }}"><i class="ri-chat-1-line"></i></a></li>
                 <li><a href="https://github.com/jovannysavage3"><i class="ri-github-line"></i></a></li>
             </ul>
            

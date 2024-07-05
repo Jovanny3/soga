@@ -9,6 +9,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Middleware\Authenticate;   
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MessageController;
 
 use App\Http\Controllers\CommentController;
 
@@ -46,6 +47,16 @@ Route::put('/notifications', [FriendController::class, 'requestFriend'])->name('
 Route::get('/settings-profile/{id}', [UserController::class, 'settingsProfile'])->middleware(['auth'])->name('settings-profile');
 Route::post('/settings-profile/{id}', [UserController::class, 'addCompany'])->name('settings-profile-professional');
 Route::put('/settings-profile/{id}', [UserController::class, 'addAboutUser'])->name('add-about-user');
+
+//Route::post('/messages', [MessageController::class, 'sendMessage'])->name('messages.send');
+Route::get('/messages/{userId}', [MessageController::class, 'getMessages'])->name('messages.get');
+Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+Route::get('/messages/{userId}', [MessageController::class, 'show'])->name('messages.show');
+Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+
+Route::get('/criar-postagem', function () {
+    return view('posts.posts'); })->name('criar-postagem');
+    Route::post('/posts', [PostController::class, 'store'])->name('store');
 
     
 

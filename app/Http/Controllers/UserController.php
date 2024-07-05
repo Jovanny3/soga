@@ -19,12 +19,17 @@ class UserController extends Controller
     {
         $newUsers = User::latest()->take(6)->get();
         $users = User::all();
-        $posts = Post::with('user', 'comments')->get();
+       // $posts = Post::with('user', 'comments.user')->get();
+        $posts = Post::with('user')->latest()->paginate(10);
         $comments = Comment::all();
-        $friendRequests = Friends::where('user_to', Auth::id())->get();;
+        $friendRequests = Friends::where('user_to', Auth::id())->where('status','pending')->get();;
         $communities = Club::all();
 
-        return view('home', compact('posts', 'users', 'friendRequests', 'comments', 'communities', 'newUsers'));
+
+        $usersM = User::where('id', '!=', auth()->id())->get();
+        //return view('messages.index', compact('users'));
+
+        return view('home', compact('posts', 'users', 'friendRequests', 'comments', 'communities', 'newUsers', 'usersM'));
     }
 
    /* public function profile($id)

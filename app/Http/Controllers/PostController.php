@@ -11,7 +11,17 @@ use App\Models\Comment;
 
 // app/Http/Controllers/PostController.php
 class PostController extends Controller
+
 {
+
+
+
+    public function index()
+{
+    $posts = Post::with('user')->get();
+    $comments = Comment::with('user')->get();
+    return view('home', compact('posts', 'comments'));
+}
      public function store(Request $request)
     {
         $data = $request->validate([
